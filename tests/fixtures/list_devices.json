@@ -1,0 +1,119 @@
+[
+  {
+    "ID": 501,
+    "Name": "Hjem",
+    "AddressLine1": "Testvej 1",
+    "City": "Aarhus",
+    "Structure": {
+      "Floors": [
+        {
+          "ID": 1,
+          "Name": "Stueetage",
+          "BuildingId": 501,
+          "AccessLevel": 4,
+          "DirectAccess": false,
+          "Devices": [],
+          "Areas": [
+            {
+              "ID": 7,
+              "Name": "Stue",
+              "BuildingId": 501,
+              "FloorId": 1,
+              "Devices": [
+                {
+                  "DeviceID": 1001,
+                  "DeviceName": "Stue",
+                  "BuildingID": 501,
+                  "BuildingName": null,
+                  "FloorID": 1,
+                  "AreaID": 7,
+                  "ImageID": 0,
+                  "InstallationDate": "2021-05-01T00:00:00",
+                  "LastServiceDate": null,
+                  "MacAddress": "aa:bb:cc:dd:ee:01",
+                  "SerialNumber": "2201234",
+                  "Type": 0,
+                  "Device": {
+                    "DeviceType": 0,
+                    "CanCool": true,
+                    "CanHeat": true,
+                    "CanDry": true,
+                    "HasAutomaticFanSpeed": true,
+                    "AirDirectionFunction": true,
+                    "SwingFunction": true,
+                    "NumberOfFanSpeeds": 5,
+                    "ModelSupportsFanSpeed": true,
+                    "ModelSupportsAuto": true,
+                    "ModelSupportsHeat": true,
+                    "ModelSupportsDryMode": true,
+                    "ModelSupportsVaneVertical": true,
+                    "ModelSupportsVaneHorizontal": true,
+                    "ModelSupportsWideVane": false,
+                    "ModelSupportsStandbyMode": true,
+                    "ModelSupportsEnergyReporting": true,
+                    "HasEnergyConsumedMeter": true,
+                    "CurrentEnergyConsumed": 1234567,
+                    "MinTempCoolDry": 16.0,
+                    "MaxTempCoolDry": 31.0,
+                    "MinTempHeat": 10.0,
+                    "MaxTempHeat": 31.0,
+                    "MinTempAutomatic": 16.0,
+                    "MaxTempAutomatic": 31.0,
+                    "TemperatureIncrement": 0.5,
+                    "RoomTemperature": 21.5,
+                    "OutdoorTemperature": 6.0,
+                    "Power": true,
+                    "OperationMode": 1,
+                    "WifiSignalStrength": -61,
+                    "Units": [
+                      { "ID": 1, "Device": 0, "SerialNumber": "2201234", "ModelNumber": 1, "Model": "MSZ-LN25VG2W", "UnitType": 0, "IsIndoor": true },
+                      { "ID": 2, "Device": 0, "SerialNumber": "2209876", "ModelNumber": 2, "Model": "MUZ-LN25VG2", "UnitType": 1, "IsIndoor": false }
+                    ]
+                  },
+                  "Permissions": null,
+                  "AccessLevel": 4,
+                  "DirectAccess": false
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "Areas": [],
+      "Devices": [
+        {
+          "DeviceID": 2002,
+          "DeviceName": "Ecodan",
+          "BuildingID": 501,
+          "MacAddress": "aa:bb:cc:dd:ee:02",
+          "SerialNumber": "1902345",
+          "Type": 1,
+          "Device": {
+            "DeviceType": 1,
+            "HasZone2": true,
+            "CanCool": false,
+            "CanHeat": true,
+            "Zone1Name": "Gulvvarme",
+            "Zone2Name": null,
+            "MaxTankTemperature": 60.0,
+            "FlowTemperature": 34.5,
+            "ReturnTemperature": 29.0,
+            "TankWaterTemperature": 47.0,
+            "OutdoorTemperature": 4.0,
+            "HasEnergyConsumedMeter": false,
+            "Units": [
+              { "ID": 3, "Device": 0, "SerialNumber": "1902345", "ModelNumber": 3, "Model": "EHST20D-VM2D", "UnitType": 0, "IsIndoor": true }
+            ]
+          }
+        },
+        {
+          "DeviceID": 3003,
+          "DeviceName": "Ventilation",
+          "BuildingID": 501,
+          "Type": 3,
+          "Device": { "DeviceType": 3 }
+        }
+      ]
+    }
+  }
+]
