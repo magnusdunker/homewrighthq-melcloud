@@ -1,71 +1,71 @@
-# MELCloud til HomewrightHQ
+# MELCloud for HomewrightHQ
 
-En ekstern integration til [HomewrightHQ](https://github.com/magnusdunker/homewrighthq) for Mitsubishi Electric-aircondition (luft-til-luft) og Ecodan-varmepumper (luft-til-vand) gennem MELCloud.
+An external integration for [HomewrightHQ](https://github.com/magnusdunker/homewrighthq) for Mitsubishi Electric air conditioners (air-to-air) and Ecodan heat pumps (air-to-water) through MELCloud.
 
 ## Installation
 
-I HomewrightHQ: **Indstillinger → Integrationer → Fra GitHub**. Indsæt
+In HomewrightHQ: **Settings → Integrations → From GitHub**. Paste
 
 ```
 https://github.com/magnusdunker/homewrighthq-melcloud
 ```
 
-og tryk **Installér**. Tilføj derefter **MELCloud** under **Tilføj integration**, og log ind med den e-mail og adgangskode, du bruger i MELCloud-appen.
+and press **Install**. Then add **MELCloud** under **Add integration**, and log in with the email and password you use in the MELCloud app.
 
-## Hvad du får
+## What you get
 
-Et luft-til-luft-anlæg bliver en enhed med:
+An air-to-air unit becomes a device with:
 
-- et klimaanlæg med tilstande (varme, køl, affugt, blæser, auto), temperatur og blæserhastighed (auto og 1 til det antal trin, anlægget har)
-- lodret lamel (auto, 1-5, swing) og vandret lamel (auto, 1-5, split, swing), hvor anlægget har den
-- rumtemperatur, og udetemperatur hvor MELCloud oplyser den
-- samlet energiforbrug i kWh på anlæg med energimåler
+- a climate entity with modes (heat, cool, dry, fan, auto), temperature and fan speed (auto and 1 up to the number of steps the unit has)
+- vertical vane (auto, 1-5, swing) and horizontal vane (auto, 1-5, split, swing), where the unit has one
+- room temperature, and outdoor temperature where MELCloud reports it
+- total energy use in kWh on units with an energy meter
 
-Et luft-til-vand-anlæg (Ecodan) bliver en enhed med:
+An air-to-water unit (Ecodan) becomes a device with:
 
-- en varmtvandsbeholder med måltemperatur og tilstandene `auto` og `force_hot_water`
-- et klimaanlæg pr. zone (zone 2, hvor anlægget har den) med varme, køl hvor anlægget kan køle, og forindstillingerne `room` (rumtemperatur), `flow` (fremløbstemperatur) og `curve` (varmekurve)
-- en indstilling for fremløbstemperaturen ved varme pr. zone
-- rumtemperatur pr. zone, udetemperatur, fremløbs-, retur- og varmtvandstemperatur
-- status: `idle`, `hot_water`, `heating`, `cooling`, `defrost`, `standby` eller `legionella`
+- a hot water tank with target temperature and the modes `auto` and `force_hot_water`
+- a climate entity per zone (zone 2, where the unit has it) with heat, cool where the unit can cool, and the presets `room` (room temperature), `flow` (flow temperature) and `curve` (heating curve)
+- a setting for the heating flow temperature per zone
+- room temperature per zone, outdoor temperature, flow, return and hot water temperature
+- status: `idle`, `hot_water`, `heating`, `cooling`, `defrost`, `standby` or `legionella`
 
-Sluk på et luft-til-vand-anlæg slukker hele anlægget, også varmt vand, fordi MELCloud kun har én tænd/sluk for anlægget.
+Turning off an air-to-water unit turns off the whole unit, hot water included, because MELCloud has only one on/off switch for the unit.
 
-## Opdatering og MELClouds grænser
+## Updates and MELCloud's limits
 
-MELCloud spærrer konti, der spørger for tit. Integrationen læser hvert anlæg hvert femte minut og listen over anlæg (energi, fremløb og retur) en gang i timen. Under **Indstillinger** på integrationen kan tiden mellem opdateringer sættes fra 3 til 60 minutter. Svarer MELCloud 429 (for mange forespørgsler), holder integrationen pause i mindst 30 minutter, eller så længe MELCloud beder om.
+MELCloud blocks accounts that ask too often. The integration reads each unit every five minutes and the list of units (energy, flow and return) once an hour. Under **Options** on the integration, the time between updates can be set from 3 to 60 minutes. If MELCloud answers 429 (too many requests), the integration pauses for at least 30 minutes, or as long as MELCloud asks.
 
-Efter en kommando venter integrationen 90 sekunder, før den læser anlægget igen, fordi MELCloud et stykke tid kan svare med de gamle værdier. Anlægget selv henter kommandoen ved sin næste forbindelse til MELCloud, typisk inden for et minut.
+After a command the integration waits 90 seconds before it reads the unit again, because MELCloud can answer with the old values for a while. The unit itself picks up the command at its next connection to MELCloud, usually within a minute.
 
-## Ikke afprøvet mod den rigtige MELCloud
+## Not tested against the real MELCloud
 
-Integrationen er skrevet ud fra, hvordan MELClouds web-API er beskrevet i pymelcloud og Home Assistants MELCloud-integration, og afprøvet mod en falsk MELCloud med svar formet som de rigtige. Disse ting er ikke kontrolleret mod rigtige anlæg:
+The integration is written from how MELCloud's web API is described in pymelcloud and Home Assistant's MELCloud integration, and tested against a fake MELCloud with responses shaped like the real ones. These things are not checked against real units:
 
-- `EffectiveFlags`-værdierne for luft-til-vand (tank, zonetemperatur, zonetilstand, fremløb). Værdierne for luft-til-luft er velkendte.
-- Koderne for status (`OperationMode` 0-6) og zonetilstande (`OperationModeZone1/2` 0-4) på luft-til-vand.
-- Om fremløbs- og returtemperaturen findes i `Device/Get`; ellers bruges værdierne fra listen over anlæg, som kun hentes en gang i timen.
-- Hvilke felter der siger, at et luft-til-luft-anlæg kan affugte eller køre auto (`ModelSupportsDryMode`, `ModelSupportsAuto`). Mangler de, vises tilstanden.
-- Hvor ofte MELCloud tillader forespørgsler. Fem minutter er et forsigtigt gæt.
-- Den `AppVersion`, der sendes ved login.
+- The `EffectiveFlags` values for air-to-water (tank, zone temperature, zone mode, flow). The values for air-to-air are well known.
+- The codes for status (`OperationMode` 0-6) and zone modes (`OperationModeZone1/2` 0-4) on air-to-water.
+- Whether the flow and return temperatures are in `Device/Get`; if not, the values from the list of units are used, which is fetched only once an hour.
+- Which fields say that an air-to-air unit can dry or run auto (`ModelSupportsDryMode`, `ModelSupportsAuto`). If they are missing, the mode is shown.
+- How often MELCloud allows requests. Five minutes is a cautious guess.
+- The `AppVersion` sent at login.
 
-Ventilationsanlæg (Lossnay, `DeviceType` 3) og MELCloud Home (den nye app) er ikke med.
+Ventilation units (Lossnay, `DeviceType` 3) and MELCloud Home (the new app) are not included.
 
-## Udvikling
+## Development
 
-Bygget i Rust på SDK'en `thehome-plugin` fra [homewright-example-integration-rust](https://github.com/magnusdunker/homewrighthq-example-integration-rust).
+Built in Rust on the `thehome-plugin` SDK from [homewright-example-integration-rust](https://github.com/magnusdunker/homewrighthq-example-integration-rust).
 
-- `src/api.rs`: login og MELClouds web-API
-- `src/model.rs`: MELClouds data og hvordan de bliver til tilstande og kommandoer
-- `src/lib.rs`: forbindelsen til HomewrightHQ
-- `tests/melcloud.rs`: tests mod en falsk MELCloud med svarene i `tests/fixtures`, og en falsk HomewrightHQ i `tests/host`
+- `src/api.rs`: login and MELCloud's web API
+- `src/model.rs`: MELCloud's data and how it becomes states and commands
+- `src/lib.rs`: the connection to HomewrightHQ
+- `tests/melcloud.rs`: tests against a fake MELCloud with the responses in `tests/fixtures`, and a fake HomewrightHQ in `tests/host`
 
 ```
 cargo test
 cargo build --release
 ```
 
-En ny version udgives med et tag, f.eks. `git tag v0.1.0 && git push origin v0.1.0`. Workflowet bygger til Windows, Linux (x86_64 og arm64, statisk musl) og macOS og lægger binærerne og `homewright.json` på releasen.
+A new version is released with a tag, e.g. `git tag v0.1.0 && git push origin v0.1.0`. The workflow builds for Windows, Linux (x86_64 and arm64, static musl) and macOS and puts the binaries and `homewright.json` on the release.
 
-## Licens
+## License
 
 MIT
